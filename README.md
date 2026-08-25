@@ -17,6 +17,8 @@ flowchart LR
     D -.read-only.-> F[notebooks/\n01_exploration\n02_analysis]
 ```
 
+![dbt lineage graph](docs/lineage.png)
+
 - **Bronze** — immutable landing zone, written by `ingest.py`: the original
   zip (kept verbatim), the extracted files, and a manifest recording the
   ingestion timestamp and source (SAS token stripped).
