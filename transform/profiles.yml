@@ -1,0 +1,11 @@
+interfood_case:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: interfood_dev.duckdb
+      threads: 4
+    prod:
+      type: duckdb
+      path: interfood.duckdb
+      threads: 4

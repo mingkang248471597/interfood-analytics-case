@@ -1,0 +1,12 @@
+.venv/
+.env
+data/
+transform/target/
+transform/dbt_packages/
+transform/logs/
+*.duckdb
+__pycache__/
+.mypy_cache/
+dev-notes.md
+Analytics Engineer Assessment.pdf
+transform/.user.yml

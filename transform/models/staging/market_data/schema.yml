@@ -1,0 +1,50 @@
+version: 2
+
+models:
+  - name: stg_futures_prices
+    description: "One row per trade date, product and contract. Error stubs and pre-window expired contracts excluded."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - trade_date
+            - product_code
+            - contract_year
+            - contract_month
+    columns:
+      - name: trade_date
+        tests: [not_null]
+      - name: price_local
+        tests: [not_null]
+      - name: product_code
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_product_code_mapping')
+              field: product_code
+      - name: unit_of_measure
+        tests:
+          - accepted_values:
+              values: ['MT', '100KG']
+      - name: currency
+        tests:
+          - accepted_values:
+              values: ['EUR']
+
+  - name: stg_fx_rates
+    description: "EUR to USD forward curve, latest snapshot only. One row per contract month."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - contract_year
+            - contract_month
+    columns:
+      - name: fx_rate_eur_usd
+        tests: [not_null]
+
+  - name: stg_product_code_mapping
+    description: "Provider RIC to product name. Codes are unique; names are not (several RICs map to Butter)."
+    columns:
+      - name: product_code
+        tests: [unique, not_null]
+      - name: product
+        tests: [not_null]

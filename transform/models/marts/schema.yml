@@ -1,0 +1,35 @@
+version: 2
+
+models:
+  - name: fct_futures_prices
+    description: "Curated futures prices, USD/MT, contract-month FX. Observed rows only."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - Timestamp
+            - Market
+            - Product
+            - Month
+            - Year
+    columns:
+      - name: PriceUSDMT
+        tests:
+          - not_null
+      - name: Product
+        tests:
+          - not_null
+
+  - name: fct_futures_prices_filled
+    description: "fct_futures_prices plus forward-filled rows for the next trade day. Export source."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns:
+            - Timestamp
+            - Market
+            - Product
+            - Month
+            - Year
+    columns:
+      - name: PriceUSDMT
+        tests:
+          - not_null

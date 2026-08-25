@@ -1,0 +1,17 @@
+version: 2
+
+sources:
+  - name: landing
+    tables:
+      - name: futures_prices
+        meta:
+          external_location: "read_json_auto('../data/bronze/extracted/data_assignment/futures_prices.json')"
+      - name: fx_rates
+        meta:
+          external_location: "read_csv_auto('../data/bronze/extracted/data_assignment/eurusd_fx_rates.csv')"
+      - name: product_code_mapping
+        meta:
+          external_location: "read_csv_auto('../data/bronze/extracted/data_assignment/product_code_mapping.csv')"
+      - name: ingestion_manifest
+        meta:
+          external_location: "read_json_auto('../data/bronze/manifest/data_assignment_manifest.json')"
